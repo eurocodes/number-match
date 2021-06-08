@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { utils } from './helpers/Utils';
+import { StarsDisplay } from './components/StarsDisplay';
+import { PlayNumber } from './components/PlayNumber';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [stars, setStars] = useState(utils.random(1, 9));
+  const [availableNums, setAvailableNums] = useState();
+  const [candidateNums, setCandidateNums] = useState([]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="game">
+      <div className="help">
+        Pick 1 or more numbers that sum to the number of stars
+      </div>
+      <div className="body">
+        <div className="left">
+          <StarsDisplay stars={stars} />
+        </div>
+        <div className="right">
+          {
+            utils.range(1, 9).map(number =>
+              <PlayNumber number={number} key={number} />
+            )
+          }
+        </div>
+      </div>
+      <div className="timer">Time Remaining: 10</div>
     </div>
   );
-}
+};
 
 export default App;
